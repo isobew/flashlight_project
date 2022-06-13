@@ -10,13 +10,37 @@ import RNShake from 'react-native-shake';
 
 export default function App() {
   const [toggle, setToggle] = useState(true); //false
-  const handleChangeToggle = () => setToggle(oldToggle => !oldToggle)
+  const handleChangeToggle = () => setToggle(oldToggle => !oldToggle);
 
   useEffect(()=>{
+    async function qualquer() {
+      try {
+        await Torch.switchState(toggle);
+      } catch(err) {
+        console.log(err);
+      }
+    }
+
+    qualquer()
       //Liga o flash do celular
-      Torch.switchState(toggle);
-      console.log("trocou a lanterna")
+      // setToggle(!toggle);
   }, [toggle]);
+
+  useEffect(() => {
+    // quando o cell for chacoalhado, mudará o toggle
+    // Shake.addListener(()=> {
+    //   setToggle(oldToggle => !oldToggle);
+    // });
+
+    //essa função vai ser chamada quando componente
+    //for ser desmontado
+    // Shake.removeSubscription(() => {});
+
+    const subscription = RNShake.addListener(() => {
+      setToggle(oldToggle => !oldToggle);
+    });    
+    return () => subscription.remove();
+  }, []);
 
   return (
     <View style={toggle ? styles.containerLight : styles.container}>
