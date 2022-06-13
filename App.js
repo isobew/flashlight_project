@@ -1,14 +1,22 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
-import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Image, StyleSheet, View, TouchableOpacity, Alert, Platform } from 'react-native';
 import imageOn from './assets/icons/eco-light.png';
 import imageOff from './assets/icons/eco-light-off.png';
 import dio from './assets/icons/logo-dio.png';
 import dioWhite from './assets/icons/logo-dio-white.png';
+import Torch from 'react-native-torch';
+import RNShake from 'react-native-shake';
 
 export default function App() {
   const [toggle, setToggle] = useState(true); //false
   const handleChangeToggle = () => setToggle(oldToggle => !oldToggle)
+
+  useEffect(()=>{
+      //Liga o flash do celular
+      Torch.switchState(toggle);
+      console.log("trocou a lanterna")
+  }, [toggle]);
 
   return (
     <View style={toggle ? styles.containerLight : styles.container}>
