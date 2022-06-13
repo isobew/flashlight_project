@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import imageOn from './assets/icons/eco-light.png';
 import imageOff from './assets/icons/eco-light-off.png';
 import dio from './assets/icons/logo-dio.png';
@@ -11,8 +11,10 @@ export default function App() {
   return (
     <View style={toggle ? styles.containerLight : styles.container}>
       <StatusBar style="auto" />
-      <Image style={toggle ? styles.lightingOn : styles.lightingOff} source={toggle ? imageOn : imageOff}/>
-      <Image style={styles.dioLogo} source={toggle ? dio : dioWhite}/>
+      <TouchableOpacity onPress={() => {}}>
+        <Image style={toggle ? styles.lightingOn : styles.lightingOff} source={toggle ? imageOn : imageOff}/>
+        <Image style={styles.dioLogo} source={toggle ? dio : dioWhite}/>
+      </TouchableOpacity>
     </View>
   );
 }
